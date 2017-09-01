@@ -1,0 +1,23 @@
+<div>
+  <div *ngIf="data.hasOwnProperty('group'); then condition else comparison"></div>
+  <ng-template #condition>
+      <div class="alert alert-group">
+          <div class="form-inline" >
+              <select class="form-control input-sm">
+                <option>AND</option>
+                <option>OR</option>
+              </select>
+              <button class="btn btn-sm">Click me!</button>
+            </div>
+      </div>
+  </ng-template>
+  <ng-template #comparison>
+      <div class="form-inline">
+        <input type="text" class="form-control input-sm" />
+        <select class="form-control input-sm">
+          <option><</option>
+        </select>
+        <input type="text" class="form-control input-sm" />
+      </div>
+  </ng-template>
+</div>
