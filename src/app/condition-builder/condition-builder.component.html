@@ -1,23 +1,35 @@
 <div>
-  <div *ngIf="data.hasOwnProperty('group'); then condition else comparison"></div>
+  <div *ngIf="data.hasOwnProperty('operands'); then condition else comparison"></div>
   <ng-template #condition>
-      <div class="alert alert-group">
-          <div class="form-inline" >
-              <select class="form-control input-sm">
-                <option>AND</option>
-                <option>OR</option>
-              </select>
-              <button class="btn btn-sm">Click me!</button>
-            </div>
+    <div class="alert alert-group">
+      <div class="form-inline" >
+        <select [(ngModel)]="data.operator" class="form-control">
+          <option *ngFor="let operator of conditionOperators" 
+            [ngValue]="operator">
+            {{operator}}
+          </option>
+        </select>
+        <button class="btn btn-sm">Click me!</button>
       </div>
+      <div class="group-conditions">
+        <app-condition-builder  *ngFor="let rule of data.operands" 
+          [data]="rule" class="condition">
+        </app-condition-builder>
+      </div>
+    </div>
   </ng-template>
   <ng-template #comparison>
-      <div class="form-inline">
-        <input type="text" class="form-control input-sm" />
-        <select class="form-control input-sm">
-          <option><</option>
-        </select>
-        <input type="text" class="form-control input-sm" />
-      </div>
+    <div class="form-inline">
+      <input [(ngModel)]="data.leftOperand"
+        type="text" class="form-control input-sm"/>
+      <select [(ngModel)]="data.operator" class="form-control">
+        <option *ngFor="let operator of comparisonOperators" 
+          [ngValue]="operator">
+          {{operator}}
+        </option>
+      </select>
+      <input [(ngModel)]="data.rightOperand" 
+        type="text" class="form-control input-sm"/>
+    </div>
   </ng-template>
 </div>

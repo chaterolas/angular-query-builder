@@ -1,0 +1,43 @@
+.group {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    border: solid 1px #666;
+  }
+  
+  .group-conditions {
+    margin-left: 20px;
+  }
+  
+  .alert-group {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-color: rgb(174, 179, 186);
+  }
+  
+  .condition, .group {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  
+  button.accordion {
+      background-color: #eee;
+      color: #444;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      text-align: left;
+      border: none;
+      outline: none;
+      transition: 0.4s;
+  }
+  
+  button.accordion.active, button.accordion:hover {
+      background-color: #ddd;
+  }
+  
+  div.directive-group {
+      padding: 0 18px;
+      background-color: white;
+      display: none;
+  }

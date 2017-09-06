@@ -1,3 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<app-condition-builder></app-condition-builder>
+<div>
+    {{ comparison | json }}
+</div>
+
+<app-condition-builder [data]="comparison"></app-condition-builder>
 
