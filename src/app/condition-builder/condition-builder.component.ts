@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { Condition } from './condition';
 import { ConditionComparison } from './condition-comparison';
 import { ConditionGroup } from './condition-group';
 import { ConditionComparisonOperator } from './condition-comparison-operator.enum';
@@ -9,12 +10,10 @@ import { ConditionGroupOperator } from './condition-group-operator.enum';
   selector: 'app-condition-builder',
   templateUrl: './condition-builder.component.html',
   styleUrls: ['./condition-builder.component.css'],
-  inputs: ['data', 'parentComponent']
+  inputs: ['condition']
 })
 export class ConditionBuilderComponent {
-  data : ConditionComparison | ConditionGroup;
-  parentComponent : ConditionBuilderComponent;
-  thisComponent: ConditionBuilderComponent;
+  condition : ConditionComparison | ConditionGroup;
   conditionOperators : Array<string>;
   comparisonOperators: Array<string>;
 
@@ -27,25 +26,23 @@ export class ConditionBuilderComponent {
     for(let compOp in ConditionComparisonOperator) {
       this.comparisonOperators.push(ConditionComparisonOperator[compOp]);
     }
-    this.thisComponent = this;
   }
 
   isGroup() {
-    return (this.data.hasOwnProperty('operands'));
+    return (this.condition.hasOwnProperty('operands'));
   }
 
   addGroup() {
-    this.addElement(new ConditionGroup);
+    this.addElement(new ConditionGroup(this.condition));
   }
 
   addComparison() {
-    this.addElement(new ConditionComparison);
+    this.addElement(new ConditionComparison(this.condition));
   }
 
-  addElement(condition : ConditionGroup | ConditionComparison) {
-    if(this.data instanceof ConditionGroup) {
-      let group : ConditionGroup = this.data as ConditionGroup;
-      group.operands.push(condition);
+  addElement(condition : Condition) {
+    if(this.condition.hasOwnProperty('operands')) {
+      (this.condition as ConditionGroup).operands.push(condition);
     }
     else {
       console.log("Imposible to add elements to a comparison");
@@ -53,10 +50,10 @@ export class ConditionBuilderComponent {
   }
 
   removeElement() {
-    if(this.parentComponent != null) {
-      let parentContainer: ConditionGroup = this.parentComponent.data as ConditionGroup;
-      let thisComponentData = this.data;
-      parentContainer.operands = parentContainer.operands.filter(element => element != thisComponentData);
+    if(this.condition.parent != null) {
+      let parentCondition: ConditionGroup = this.condition.parent as ConditionGroup;
+      let thisCondition: Condition = this.condition;
+      parentCondition.operands = parentCondition.operands.filter(element => element != this.condition);
     }
   }
 

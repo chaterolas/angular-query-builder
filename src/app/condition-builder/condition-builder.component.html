@@ -1,9 +1,9 @@
 <div>
-  <div *ngIf="isGroup(); then condition else comparison"></div>
-  <ng-template #condition>
+  <div *ngIf="isGroup(); then conditionSection else comparisonSection"></div>
+  <ng-template #conditionSection>
     <div class="alert alert-group mt-2">
       <div class="form-inline">
-        <select [(ngModel)]="data.operator" class="form-control form-control-sm mr-2">
+        <select [(ngModel)]="condition.operator" class="form-control form-control-sm mr-2">
           <option *ngFor="let operator of conditionOperators" 
             [ngValue]="operator">
             {{operator}}
@@ -25,24 +25,24 @@
         </div>
       </div>
       <div class="group-conditions">
-        <app-condition-builder  *ngFor="let rule of data.operands" 
-          [data]="rule" [parentComponent]="thisComponent" class="condition">
+        <app-condition-builder *ngFor="let childCondition of condition.operands" 
+          [condition]="childCondition" class="condition">
         </app-condition-builder>
       </div>
     </div>
   </ng-template>
-  <ng-template #comparison>
+  <ng-template #comparisonSection>
     <div class="form-inline  mt-2">
-      <input type="text" [(ngModel)]="data.leftOperand"
+      <input type="text" [(ngModel)]="condition.leftOperand"
          class="form-control form-control-sm mr-2"/>
-      <select [(ngModel)]="data.operator" 
+      <select [(ngModel)]="condition.operator" 
         class="form-control form-control-sm mr-2">
         <option *ngFor="let operator of comparisonOperators" 
           [ngValue]="operator">
           {{operator}}
         </option>
       </select>
-      <input type="text" [(ngModel)]="data.rightOperand"
+      <input type="text" [(ngModel)]="condition.rightOperand"
         class="form-control form-control-sm mr-2"/>
       <div ngbDropdown class="d-inline-block">
         <button ngbDropdownToggle class="btn btn-outline-secondary btn-sm" 
