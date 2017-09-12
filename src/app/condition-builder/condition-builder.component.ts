@@ -9,10 +9,12 @@ import { ConditionGroupOperator } from './condition-group-operator.enum';
   selector: 'app-condition-builder',
   templateUrl: './condition-builder.component.html',
   styleUrls: ['./condition-builder.component.css'],
-  inputs: ['data']
+  inputs: ['data', 'parentComponent']
 })
 export class ConditionBuilderComponent {
   data : ConditionComparison | ConditionGroup;
+  parentComponent : ConditionBuilderComponent;
+  thisComponent: ConditionBuilderComponent;
   conditionOperators : Array<string>;
   comparisonOperators: Array<string>;
 
@@ -25,5 +27,37 @@ export class ConditionBuilderComponent {
     for(let compOp in ConditionComparisonOperator) {
       this.comparisonOperators.push(ConditionComparisonOperator[compOp]);
     }
+    this.thisComponent = this;
   }
+
+  isGroup() {
+    return (this.data.hasOwnProperty('operands'));
+  }
+
+  addGroup() {
+    this.addElement(new ConditionGroup);
+  }
+
+  addComparison() {
+    this.addElement(new ConditionComparison);
+  }
+
+  addElement(condition : ConditionGroup | ConditionComparison) {
+    if(this.data instanceof ConditionGroup) {
+      let group : ConditionGroup = this.data as ConditionGroup;
+      group.operands.push(condition);
+    }
+    else {
+      console.log("Imposible to add elements to a comparison");
+    }
+  }
+
+  removeElement() {
+    if(this.parentComponent != null) {
+      let parentContainer: ConditionGroup = this.parentComponent.data as ConditionGroup;
+      let thisComponentData = this.data;
+      parentContainer.operands = parentContainer.operands.filter(element => element != thisComponentData);
+    }
+  }
+
 }

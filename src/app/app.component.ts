@@ -14,36 +14,6 @@ export class AppComponent {
   comparison : ConditionGroup;
 
   constructor() {
-    this.comparison = {
-      operator: ConditionGroupOperator.AND,
-      operands: [
-        {
-          leftOperand: 3,
-          rightOperand: 4,
-          operator: ConditionComparisonOperator.Lt
-        },
-        {
-          leftOperand: 6,
-          rightOperand: 3,
-          operator: ConditionComparisonOperator.Gt
-        },
-        {
-          operator: ConditionGroupOperator.OR,
-          operands: [
-            {
-              leftOperand: 3,
-              rightOperand: 4,
-              operator: ConditionComparisonOperator.Lt
-            },
-            {
-              leftOperand: 6,
-              rightOperand: 3,
-              operator: ConditionComparisonOperator.Gt
-            }
-          ]
-        }
-      ]
-    };
-    
+    this.comparison = new ConditionGroup;
   }
 }

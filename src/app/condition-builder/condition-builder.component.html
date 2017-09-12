@@ -1,35 +1,61 @@
 <div>
-  <div *ngIf="data.hasOwnProperty('operands'); then condition else comparison"></div>
+  <div *ngIf="isGroup(); then condition else comparison"></div>
   <ng-template #condition>
-    <div class="alert alert-group">
-      <div class="form-inline" >
-        <select [(ngModel)]="data.operator" class="form-control">
+    <div class="alert alert-group mt-2">
+      <div class="form-inline">
+        <select [(ngModel)]="data.operator" class="form-control form-control-sm mr-2">
           <option *ngFor="let operator of conditionOperators" 
             [ngValue]="operator">
             {{operator}}
           </option>
         </select>
-        <button class="btn btn-sm">Click me!</button>
+        <div ngbDropdown class="d-inline-block">
+          <button ngbDropdownToggle class="btn btn-outline-secondary btn-sm" 
+            id="dropdownBasic1">
+            ...
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button class="dropdown-item" (click)="addGroup()">Add subcondition</button>
+            <button class="dropdown-item" (click)="addComparison()">Add comparison</button>
+            <button class="dropdown-item">Copy</button>
+            <button class="dropdown-item">Paste</button>
+            <button class="dropdown-item">Cut</button>
+            <button class="dropdown-item" (click)="removeElement()">Delete</button>
+          </div>
+        </div>
       </div>
       <div class="group-conditions">
         <app-condition-builder  *ngFor="let rule of data.operands" 
-          [data]="rule" class="condition">
+          [data]="rule" [parentComponent]="thisComponent" class="condition">
         </app-condition-builder>
       </div>
     </div>
   </ng-template>
   <ng-template #comparison>
-    <div class="form-inline">
-      <input [(ngModel)]="data.leftOperand"
-        type="text" class="form-control input-sm"/>
-      <select [(ngModel)]="data.operator" class="form-control">
+    <div class="form-inline  mt-2">
+      <input type="text" [(ngModel)]="data.leftOperand"
+         class="form-control form-control-sm mr-2"/>
+      <select [(ngModel)]="data.operator" 
+        class="form-control form-control-sm mr-2">
         <option *ngFor="let operator of comparisonOperators" 
           [ngValue]="operator">
           {{operator}}
         </option>
       </select>
-      <input [(ngModel)]="data.rightOperand" 
-        type="text" class="form-control input-sm"/>
+      <input type="text" [(ngModel)]="data.rightOperand"
+        class="form-control form-control-sm mr-2"/>
+      <div ngbDropdown class="d-inline-block">
+        <button ngbDropdownToggle class="btn btn-outline-secondary btn-sm" 
+          id="dropdownBasic1">
+          ...
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button class="dropdown-item">Copy</button>
+          <button class="dropdown-item">Paste</button>
+          <button class="dropdown-item">Cut</button>
+          <button class="dropdown-item" (click)="removeElement()">Delete</button>
+        </div>
+      </div>
     </div>
   </ng-template>
 </div>
