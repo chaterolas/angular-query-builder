@@ -1,0 +1,55 @@
+<div>
+  <div *ngIf="isGroup(); then conditionSection else comparisonSection"></div>
+  <ng-template #conditionSection>
+    <div class="alert alert-group mt-2">
+      <div class="form-inline">
+        <select [(ngModel)]="condition.operator" class="form-control form-control-sm mr-2">
+          <option *ngFor="let operator of conditionOperators" 
+            [ngValue]="operator">
+            {{operator}}
+          </option>
+        </select>
+        <div ngbDropdown class="d-inline-block">
+          <button ngbDropdownToggle class="btn btn-outline-secondary btn-sm" 
+            id="dropdownBasic1">
+            ...
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button class="dropdown-item" (click)="addGroup()">Add subcondition</button>
+            <button class="dropdown-item" (click)="addComparison()">Add comparison</button>
+            <button *ngIf="parentCondition" class="dropdown-item" (click)="removeElement()">Delete</button>
+          </div>
+        </div>
+      </div>
+      <div class="group-conditions">
+        <app-condition-builder *ngFor="let childCondition of condition.operands" 
+          [condition]="childCondition" [parentCondition]="condition" class="condition">
+        </app-condition-builder>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #comparisonSection>
+    <div class="form-inline  mt-2">
+      <input type="text" [(ngModel)]="condition.leftOperand"
+         class="form-control form-control-sm mr-2"/>
+      <select [(ngModel)]="condition.operator" 
+        class="form-control form-control-sm mr-2">
+        <option *ngFor="let operator of comparisonOperators" 
+          [ngValue]="operator">
+          {{operator}}
+        </option>
+      </select>
+      <input type="text" [(ngModel)]="condition.rightOperand"
+        class="form-control form-control-sm mr-2"/>
+      <div ngbDropdown class="d-inline-block">
+        <button ngbDropdownToggle class="btn btn-outline-secondary btn-sm" 
+          id="dropdownBasic1">
+          ...
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button class="dropdown-item" (click)="removeElement()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
