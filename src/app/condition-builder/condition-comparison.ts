@@ -6,7 +6,7 @@ export class ConditionComparison extends Condition {
     rightOperand: number | string | Array<number | string>;
     operator: ConditionComparisonOperator;
 
-    constructor(parent: Condition) {
-        super(parent);
+    constructor() {
+        super();
     }
 }

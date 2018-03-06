@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Condition } from './condition';
 import { ConditionComparison } from './condition-comparison';
@@ -9,12 +9,15 @@ import { ConditionGroupOperator } from './condition-group-operator.enum';
 @Component({
   selector: 'app-condition-builder',
   templateUrl: './condition-builder.component.html',
-  styleUrls: ['./condition-builder.component.css'],
-  inputs: ['condition']
+  styleUrls: ['./condition-builder.component.css']
 })
 export class ConditionBuilderComponent {
-  condition : ConditionComparison | ConditionGroup;
-  conditionOperators : Array<string>;
+  @Input()
+  condition: ConditionComparison | ConditionGroup;
+  @Input()
+  parentCondition: ConditionGroup;
+
+  conditionOperators: Array<string>;
   comparisonOperators: Array<string>;
 
   constructor() {
@@ -33,11 +36,11 @@ export class ConditionBuilderComponent {
   }
 
   addGroup() {
-    this.addElement(new ConditionGroup(this.condition));
+    this.addElement(new ConditionGroup());
   }
 
   addComparison() {
-    this.addElement(new ConditionComparison(this.condition));
+    this.addElement(new ConditionComparison());
   }
 
   addElement(condition : Condition) {
@@ -50,11 +53,9 @@ export class ConditionBuilderComponent {
   }
 
   removeElement() {
-    if(this.condition.parent != null) {
-      let parentCondition: ConditionGroup = this.condition.parent as ConditionGroup;
+    if(this.parentCondition != null) {
       let thisCondition: Condition = this.condition;
-      parentCondition.operands = parentCondition.operands.filter(element => element != this.condition);
+      this.parentCondition.operands = this.parentCondition.operands.filter(element => element != this.condition);
     }
   }
-
 }

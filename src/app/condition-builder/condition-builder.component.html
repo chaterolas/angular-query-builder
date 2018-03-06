@@ -17,16 +17,13 @@
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
             <button class="dropdown-item" (click)="addGroup()">Add subcondition</button>
             <button class="dropdown-item" (click)="addComparison()">Add comparison</button>
-            <button class="dropdown-item">Copy</button>
-            <button class="dropdown-item">Paste</button>
-            <button class="dropdown-item">Cut</button>
-            <button class="dropdown-item" (click)="removeElement()">Delete</button>
+            <button *ngIf="parentCondition" class="dropdown-item" (click)="removeElement()">Delete</button>
           </div>
         </div>
       </div>
       <div class="group-conditions">
         <app-condition-builder *ngFor="let childCondition of condition.operands" 
-          [condition]="childCondition" class="condition">
+          [condition]="childCondition" [parentCondition]="condition" class="condition">
         </app-condition-builder>
       </div>
     </div>
@@ -50,9 +47,6 @@
           ...
         </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <button class="dropdown-item">Copy</button>
-          <button class="dropdown-item">Paste</button>
-          <button class="dropdown-item">Cut</button>
           <button class="dropdown-item" (click)="removeElement()">Delete</button>
         </div>
       </div>

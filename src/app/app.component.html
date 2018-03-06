@@ -1,4 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
-<app-condition-builder [condition]="condition" ></app-condition-builder>
+<p>
+    {{condition | json}}
+</p>
+
+<app-condition-builder [condition]="condition" [parentCondition]="null" ></app-condition-builder>
 
